@@ -4,13 +4,12 @@ import "./styles.css";
 
 const Header = () => {
   const navigationLinks = [
-    { label: "Home", Path: "/" }, // Updated label to Home
-    { label: "Shop", Path: "/shop" }, // Assuming Shop is at /shop
+    { label: "Home", Path: "/" }, // Home as landing page
+    { label: "Shop", Path: "/shop" }, // Shop page
     { label: "WishList", Path: "/wishlist" },
     { label: "Feedback", Path: "/feedback" },
     { label: "Contact", Path: "/contact" },
-    { label: "SignIn", Path: "/sign-in" },
-    ,
+    { label: "SignIn", Path: "/sign-in" }
   ];
 
   const [showMobileSidebar, setShowMobileSidebar] = useState(true);

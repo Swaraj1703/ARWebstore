@@ -11,9 +11,11 @@ import Feedback from "./components/Feedback/Feedback";
 import SignUp from "./components/SignUp/SignUp";
 import SignIn from "./components/SignIn/Signin";
 import WishList from "./components/Wishlist/WishList";
+// Adjust the path if needed
+
 import { useState } from "react";
 
-const App = () => {
+function App() {
   const [wishlist, setWishlist] = useState([]);
 
   const addToWishlist = (item) => {
@@ -31,37 +33,33 @@ const App = () => {
         <Header />
         <Routes>
           {/* Set Home as the new landing page */}
-          <Route path="/" element={<Home />} /> {/* Changed About to Home */}
+          <Route path="/" element={<Home />} /> {/* Home as Landing Page */}
 
           {/* Move ProductList to the /shop route */}
           <Route
             path="/shop"
-            element={
-              <ProductList
-                addToWishlist={addToWishlist}
-                wishlist={wishlist}
-                removeFromWishlist={handleRemoveItem}
-              />
-            }
-          />
+            element={<ProductList
+              addToWishlist={addToWishlist}
+              wishlist={wishlist}
+              removeFromWishlist={handleRemoveItem} />} />
+
 
           {/* Other routes */}
           <Route path="/sign-in" element={<SignIn />} />
           <Route path="/sign-up" element={<SignUp />} />
           <Route
             path="/wishlist"
-            element={
-              <WishList wishlist={wishlist} onRemoveItem={handleRemoveItem} />
-            }
-          />
+            element={<WishList wishlist={wishlist} onRemoveItem={handleRemoveItem} />} />
           <Route path="/feedback" element={<Feedback />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="*" element={<ErrorPage />} />
         </Routes>
+        
+
         <Footer />
       </BrowserRouter>
     </>
   );
-};
+}
 
 export default App;
