@@ -1,31 +1,43 @@
-import React from 'react';
-// Ensure this is globally available from the CDN in index.html
-import "./VRViewer.css";
+import React, { useState } from 'react';
+import './VRViewer.css';
 
 const VRViewer = ({ wishlist }) => {
-  // Helper function to generate a random position within a range
-  const getRandomPosition = () => {
-    const x = (Math.random() - 0.5) * 4;  // Random x position between -2 and 2 meters
-    const z = -3 - Math.random() * 2;     // Random z position between -3 and -5 meters
-    return `${x} 0 ${z}`;                 // Y position set to 0 for ground level
+  const [placedModels, setPlacedModels] = useState([]); // Stores models placed in AR
+
+  // Function to add a model at the tapped location
+  const handleSceneClick = (event) => {
+    // Get screen coordinates from the click event
+    const x = event.detail.intersection.point.x;
+    const y = event.detail.intersection.point.y;
+    const z = event.detail.intersection.point.z;
+
+    // Place the first model in wishlist (or any you choose)
+    const newModel = {
+      id: placedModels.length,
+      modelSrc: wishlist[0].modelSrc, // You could let users choose the model dynamically
+      position: `${x} ${y} ${z}`,
+    };
+
+    setPlacedModels([...placedModels, newModel]); // Add new model to placedModels array
   };
 
   return (
     <a-scene
-      vr-mode-ui="enabled: false"                  // Disable VR UI since we only want AR
-      embedded                                     // Embed scene in the page
-      arjs="sourceType: webcam; debugUIEnabled: false;" // Use the camera for AR
+      vr-mode-ui="enabled: false"
+      embedded
+      arjs="sourceType: webcam; debugUIEnabled: false;"
+      onClick={handleSceneClick} // Attach click handler for placing models
     >
       <a-camera gps-camera rotation-reader></a-camera>
 
-      {/* Render each wishlist item in AR with a randomized initial position */}
-      {wishlist.map((item, idx) => (
+      {/* Render each placed model */}
+      {placedModels.map((model) => (
         <a-entity
-          key={idx}
-          gltf-model={item.modelSrc}                // Model source
-          position={getRandomPosition()}            // Random position to avoid overlap
-          rotation="0 180 0"                        // Rotate to face the camera
-          scale="0.5 0.5 0.5"                       // Scale model for optimal size
+          key={model.id}
+          gltf-model={model.modelSrc}
+          position={model.position}
+          rotation="0 180 0"
+          scale="0.5 0.5 0.5"
         ></a-entity>
       ))}
     </a-scene>
