@@ -1,5 +1,5 @@
 import React from 'react';
-import "@google/model-viewer"; // Ensure this is globally available from the CDN in index.html
+// Ensure this is globally available from the CDN in index.html
 import "./VRViewer.css";
 
 const VRViewer = ({ wishlist }) => {
