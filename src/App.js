@@ -11,6 +11,8 @@ import Feedback from "./components/Feedback/Feedback";
 import SignUp from "./components/SignUp/SignUp";
 import SignIn from "./components/SignIn/Signin";
 import WishList from "./components/Wishlist/WishList";
+import VRViewer from "./components/VRViewer/VRViewer";
+
 // Adjust the path if needed
 
 import { useState } from "react";
@@ -42,6 +44,8 @@ function App() {
               addToWishlist={addToWishlist}
               wishlist={wishlist}
               removeFromWishlist={handleRemoveItem} />} />
+
+            <Route path="/vr-viewer" element={<VRViewer wishlist={wishlist} />} />
 
 
           {/* Other routes */}

@@ -1,8 +1,9 @@
 import React from "react";
 import "./WishList.css";
-import {Link} from 'react-router-dom';
-const WishList = ({wishlist,onRemoveItem}) => {
-  const isEmpty =wishlist.length===0;
+import { Link } from "react-router-dom";
+
+const WishList = ({ wishlist, onRemoveItem }) => {
+  const isEmpty = wishlist.length === 0;
 
   const EmptyCart = () => {
     return (
@@ -16,9 +17,11 @@ const WishList = ({wishlist,onRemoveItem}) => {
       </>
     );
   };
+
   const handleRemoveItem = (id) => {
     onRemoveItem(id);
   };
+
   const FilledWishList = () => {
     return (
       <div className="wishlist-items">
@@ -37,6 +40,7 @@ const WishList = ({wishlist,onRemoveItem}) => {
       </div>
     );
   };
+
   return (
     <div className="container">
       <h3 className="cart-title">Your WishList</h3>
@@ -48,8 +52,14 @@ const WishList = ({wishlist,onRemoveItem}) => {
             {isEmpty ? <EmptyCart /> : <FilledWishList />}
           </div>
         </div>
-        </div>
+        {/* Button to View All Items in VR */}
+        {!isEmpty && (
+          <Link to="/vr-viewer">
+            <button className="view-in-vr-button">View All in VR</button>
+          </Link>
+        )}
       </div>
+    </div>
   );
 };
 

@@ -1,0 +1,29 @@
+.vr-viewer {
+    padding: 2rem;
+    text-align: center;
+  }
+  
+  .vr-viewer h2 {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    color: #333;
+  }
+  
+  .vr-items {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+  }
+  .vr-viewer {
+    padding: 2rem;
+    text-align: center;
+  }
+  
+  .vr-items {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+  
