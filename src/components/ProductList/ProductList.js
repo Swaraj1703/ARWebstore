@@ -6,6 +6,7 @@ import bedroomImg from "../../assets/bedroom.png";
 import decorImg from "../../assets/floor-lamp.png";
 import livingRoomImg from "../../assets/living-room.png";
 import officeImg from "../../assets/working-man.png";
+import parallaxImage from "../../assets/albero-furniture-bratislava-xRuHNSq5rD0-unsplash.jpg";
 
 const categories = [
   { name: "Bedroom", image: bedroomImg },
@@ -19,13 +20,28 @@ const ProductList = ({ addToWishlist, wishlist, removeFromWishlist }) => {
 
   // Filter products based on the selected category
   const filteredProducts = selectedCategory
-    ? productItems.filter(item => item.category === selectedCategory)
+    ? productItems.filter((item) => item.category === selectedCategory)
     : productItems;
 
   return (
     <div className="shop-page">
       {/* Parallax Banner Section */}
-      <section className="parallax-banner">
+      <section
+        className="parallax-banner"
+        style={{
+          backgroundImage: `url(${parallaxImage})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundAttachment: "fixed",
+          height: "100vh",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          position: "relative",
+          color: "#fff",
+          textAlign: "center",
+        }}
+      >
         <div className="parallax-text">
           <h1>Up to 50% off</h1>
           <p>Hundreds of styles available</p>
@@ -50,7 +66,7 @@ const ProductList = ({ addToWishlist, wishlist, removeFromWishlist }) => {
             <img src={category.image} alt={category.name} />
             <h3>{category.name}</h3>
             <p>
-              {productItems.filter(item => item.category === category.name).length}{" "}
+              {productItems.filter((item) => item.category === category.name).length}{" "}
               PRODUCTS
             </p>
           </div>

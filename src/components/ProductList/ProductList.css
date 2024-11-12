@@ -128,7 +128,7 @@
 
 /* Parallax Banner styling for fixed background effect */
 .parallax-banner {
-  background-image: url('F:\AR-Webstore-master\src\assets\albero-furniture-bratislava-xRuHNSq5rD0-unsplash.jpg');
+  /*background-image: url('F:\AR-Webstore-master\src\assets\albero-furniture-bratislava-xRuHNSq5rD0-unsplash.jpg');*/
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
