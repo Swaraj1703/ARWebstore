@@ -1,0 +1,8 @@
+# Node.js dependencies
+node_modules/
+
+# Firebase Service Account Key
+serviceAccountKey.json
+
+# Lock file (optional, if you want to ignore it)
+package-lock.json
