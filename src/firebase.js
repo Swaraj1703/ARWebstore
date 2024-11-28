@@ -15,29 +15,38 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
-// Initialize and set up Firebase Auth with persistence
+// Initialize Firebase Auth
 const auth = getAuth(app);
 
+// Set Firebase Auth persistence
 setPersistence(auth, browserLocalPersistence)
   .then(() => {
     console.log("Firebase Auth persistence set to browserLocalPersistence.");
   })
   .catch((error) => {
-    console.error("Error setting auth persistence:", error);
+    console.error("Error setting auth persistence:", error.message);
   });
 
 // Initialize Firestore
 const db = getFirestore(app);
 
-// Helper function to add an order
+/**
+ * Helper function to add an order to Firestore
+ * @param {Object} orderData - The order details (items, totalPrice, address, userId, etc.)
+ * @returns {Promise<string>} - Returns the document ID of the placed order
+ */
 export const addOrder = async (orderData) => {
+  if (!orderData || Object.keys(orderData).length === 0) {
+    throw new Error("Invalid order data. Cannot place an empty order.");
+  }
+
   try {
     const ordersCollection = collection(db, "orders"); // Reference to the "orders" collection
     const docRef = await addDoc(ordersCollection, orderData); // Add the order to Firestore
-    console.log("Order placed with ID:", docRef.id); // Log the document ID for the new order
+    console.log("Order placed with ID:", docRef.id); // Log the document ID
     return docRef.id;
   } catch (error) {
-    console.error("Error placing order:", error); // Handle errors gracefully
+    console.error("Error placing order in Firestore:", error.message);
     throw error; // Re-throw the error for further handling
   }
 };

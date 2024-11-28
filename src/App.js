@@ -2,7 +2,7 @@ import "./App.css";
 import "@google/model-viewer/dist/model-viewer.min.js";
 import { Routes, Route, BrowserRouter, Navigate } from "react-router-dom";
 import ProductList from "./components/ProductList/ProductList";
-import Home from "./components/Home/Home"; // Renamed About to Home
+import Home from "./components/Home/Home";
 import ErrorPage from "./components/ErrorPage/ErrorPage";
 import Contact from "./components/Contact/Contact";
 import Footer from "./components/Footer/Footer";
@@ -12,18 +12,18 @@ import SignUp from "./components/SignUp/SignUp";
 import SignIn from "./components/SignIn/Signin";
 import WishList from "./components/Wishlist/WishList";
 import VRViewer from "./components/VRViewer/VRViewer";
-import ShippingAddress from "./components/ShippingAddress/ShippingAddress"; // Ensure correct import path
-import Payment from "./components/Payment/Payment"; // Ensure correct import path
-import ThankYou from "./components/Thankyou/ThankYou.js"; // Import ThankYou component
+import ShippingAddress from "./components/ShippingAddress/ShippingAddress";
+import Payment from "./components/Payment/Payment";
+import ThankYou from "./components/Thankyou/ThankYou";
 
 import { useState, useEffect } from "react";
-import { onAuthStateChanged } from "firebase/auth"; // Firebase auth listener
-import { auth } from "./firebase.js"; // Import Firebase auth
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "./firebase.js";
 
 function App() {
   const [wishlist, setWishlist] = useState([]);
-  const [user, setUser] = useState(null); // State to manage authenticated user
-  const [address, setAddress] = useState(""); // State to store shipping address
+  const [user, setUser] = useState(null);
+  const [address, setAddress] = useState("");
 
   // Track authentication state
   useEffect(() => {
@@ -68,8 +68,8 @@ function App() {
 
   // Protected Route Component
   const ProtectedRoute = ({ children }) => {
-    console.log("Current user in ProtectedRoute:", user);
     if (!user) {
+      console.warn("User is not authenticated. Redirecting to /sign-in.");
       return <Navigate to="/sign-in" />;
     }
     return children;
@@ -106,7 +106,7 @@ function App() {
                 <WishList
                   wishlist={wishlist}
                   onRemoveItem={handleRemoveItem}
-                  onPlaceOrder={handlePlaceOrder} // Pass handlePlaceOrder function here
+                  onPlaceOrder={handlePlaceOrder}
                 />
               </ProtectedRoute>
             }
@@ -138,14 +138,8 @@ function App() {
               </ProtectedRoute>
             }
           />
-          <Route
-            path="/thank-you"
-            element={
-              <ProtectedRoute>
-                <ThankYou />
-              </ProtectedRoute>
-            }
-          />
+          {/* Make thank-you accessible without authentication */}
+          <Route path="/thank-you" element={<ThankYou />} />
         </Routes>
         <Footer />
       </BrowserRouter>
