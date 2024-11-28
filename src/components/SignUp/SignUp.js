@@ -1,97 +1,145 @@
 import React, { useState } from "react";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth"; // Import Firebase Auth functions
+import { auth } from "../../firebase.js"; // Corrected the path to Firebase configuration
 import "./SignUp.css";
 import { Link } from "react-router-dom";
+
 const SignUp = () => {
-    const [ error,setError ] = useState('')
-    const [ userDetails,setuserDetails ] = useState({
-        name: '',
-        email:'',
-        password:'',
-        confirm_password: ''
-    })
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState(false); // Add a success message
+  const [loading, setLoading] = useState(false); // Add loading state
+  const [userDetails, setUserDetails] = useState({
+    name: "",
+    email: "",
+    password: "",
+    confirm_password: "",
+  });
 
-    const handleOnchange = (e) => {
-        setuserDetails({
-            ...userDetails,
-            [e.target.name]: e.target.value
-        })
+  const handleOnchange = (e) => {
+    setUserDetails({
+      ...userDetails,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError("");
+    setSuccess(false);
+    setLoading(true);
+
+    // Validation checks
+    if (
+      !userDetails.name ||
+      !userDetails.email ||
+      !userDetails.password ||
+      !userDetails.confirm_password
+    ) {
+      setError("Please fill in all the required fields");
+      setLoading(false);
+      return;
     }
 
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        if(userDetails.confirm_password === '' || userDetails.password === '' || userDetails.email === '' || userDetails.name === ''){
-            setError('please fill in all the required field')
-            return
-        }
-        if(userDetails.password !== userDetails.confirm_password){
-            setError('Passwords do not match')
-            return
-        }
-
-        console.log(userDetails)
-        setuserDetails({
-            name: '',
-            email:'',
-            password:'',
-            confirm_password: ''
-        })
-        setError('')
-        
-
+    if (userDetails.password !== userDetails.confirm_password) {
+      setError("Passwords do not match");
+      setLoading(false);
+      return;
     }
+
+    try {
+      // Create user with Firebase Authentication
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        userDetails.email,
+        userDetails.password
+      );
+
+      // Update user profile with display name
+      await updateProfile(userCredential.user, {
+        displayName: userDetails.name,
+      });
+
+      setSuccess(true);
+      console.log("User registered successfully:", userDetails.email);
+
+      // Reset form fields
+      setUserDetails({
+        name: "",
+        email: "",
+        password: "",
+        confirm_password: "",
+      });
+    } catch (err) {
+      setError(err.message); // Show Firebase error message
+    } finally {
+      setLoading(false); // Ensure loading state is reset
+    }
+  };
 
   return (
     <main className="main-sign_up_container">
-    
-    <form onSubmit={handleSubmit} className="sign-up-container">
-        <p className="error-paragraph">{error !== '' ? `Error: ${error}` : null}</p>
+      <form onSubmit={handleSubmit} className="sign-up-container">
+        {error && <p className="error-paragraph">Error: {error}</p>}
+        {success && (
+          <p className="success-paragraph">
+            Account created successfully! You can now{" "}
+            <Link to="/sign-in">Sign In</Link>.
+          </p>
+        )}
         <h3>Sign up</h3>
-        <div className="inputs">
-
-        </div>
-            <div className="input-div">
-            <label htmlFor="name">
-                Name
-            </label>
-            <input name="name" id="name" type="text"  
+        <div className="inputs"></div>
+        <div className="input-div">
+          <label htmlFor="name">Name</label>
+          <input
+            name="name"
+            id="name"
+            type="text"
             onChange={handleOnchange}
             value={userDetails.name}
-            />
-            </div>
-            <div className="input-div">
-            <label htmlFor="email">
-                Email
-            </label>
-            <input name="email" id="email" type="email"  
+            required
+          />
+        </div>
+        <div className="input-div">
+          <label htmlFor="email">Email</label>
+          <input
+            name="email"
+            id="email"
+            type="email"
             onChange={handleOnchange}
             value={userDetails.email}
-            />
-            </div>
-            <div className="input-div">
-            <label htmlFor="password">
-                password
-            </label>
-            <input name="password" id="password" type="text"  
+            required
+          />
+        </div>
+        <div className="input-div">
+          <label htmlFor="password">Password</label>
+          <input
+            name="password"
+            id="password"
+            type="password"
             onChange={handleOnchange}
             value={userDetails.password}
-            />
-            </div>
-            <div className="input-div">
-            <label htmlFor="confirm_password">
-                Confirm Password
-            </label>
-            <input name="confirm_password" id="confirm_password" type="password"  
+            required
+          />
+        </div>
+        <div className="input-div">
+          <label htmlFor="confirm_password">Confirm Password</label>
+          <input
+            name="confirm_password"
+            id="confirm_password"
+            type="password"
             onChange={handleOnchange}
             value={userDetails.confirm_password}
-            />
-            </div>
-            <button className="sign-up-button">
-                Sign up
-            </button>
-            <p className="sign-up-redirect-p">Already have an account? <Link to="/sign-in">Sign in</Link></p>
-    </form>
+            required
+          />
+        </div>
+        <button className="sign-up-button" disabled={loading}>
+          {loading ? "Signing up..." : "Sign up"}
+        </button>
+        <p className="sign-up-redirect-p">
+          Already have an account? <Link to="/sign-in">Sign in</Link>
+        </p>
+      </form>
     </main>
-
   );
 };
 

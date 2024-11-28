@@ -1,0 +1,61 @@
+.payment-container {
+    margin: 2rem auto;
+    padding: 2rem;
+    max-width: 600px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  
+  .payment-form h4 {
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+    color: #333;
+  }
+  
+  .payment-form h5 {
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+    color: #555;
+  }
+  
+  .payment-options {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin: 1rem 0;
+  }
+  
+  .payment-options label {
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+  
+  .payment-options input {
+    margin-right: 0.5rem;
+  }
+  
+  .submit-payment-button {
+    margin-top: 1rem;
+    padding: 10px 20px;
+    font-size: 1rem;
+    background: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  
+  .submit-payment-button:hover {
+    background: #0056b3;
+  }
+  
+  .error-message {
+    color: red;
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+  }
+  

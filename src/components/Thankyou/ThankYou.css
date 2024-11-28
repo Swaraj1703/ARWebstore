@@ -1,0 +1,29 @@
+.thank-you-container {
+    text-align: center;
+    margin-top: 50px;
+  }
+  
+  .thank-you-container h1 {
+    font-size: 2rem;
+    color: #4caf50;
+  }
+  
+  .thank-you-container p {
+    margin: 10px 0;
+    font-size: 1.2rem;
+  }
+  
+  .back-to-home {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #4caf50;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+  }
+  
+  .back-to-home:hover {
+    background-color: #45a049;
+  }
+  
